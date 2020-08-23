@@ -152,7 +152,10 @@ abstract class Smarty_Internal_TemplateBase extends Smarty_Internal_Data {
                     }
                 } else {
                     if (!$_template->compiled->exists || ($_template->smarty->force_compile && !$_template->compiled->isCompiled)) {
-                        $_template->compileTemplateSource();
+                    	// ssnet change - only compile if necessary
+                    	if($_template->mustCompile()) {
+                            $_template->compileTemplateSource();
+	                    }
                     }
                     if ($this->smarty->debugging) {
                         Smarty_Internal_Debug::start_render($_template);
@@ -162,6 +165,10 @@ abstract class Smarty_Internal_TemplateBase extends Smarty_Internal_Data {
                         if ($_template->mustCompile) {
                             // recompile and load again
                             $_template->compileTemplateSource();
+                            //ssnet - invalidate file cache
+                            if(is_callable('opcache_invalidate')) {
+	                            opcache_invalidate($_template->compiled->filepath);
+                            }
                             include($_template->compiled->filepath);
                         }
                         $_template->compiled->loaded = true;

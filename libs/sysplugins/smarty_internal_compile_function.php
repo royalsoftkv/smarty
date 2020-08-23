@@ -66,7 +66,7 @@ class Smarty_Internal_Compile_Function extends Smarty_Internal_CompileBase {
         $compiler->template->properties['function'][$_name]['parameter'] = array();
         $_smarty_tpl = $compiler->template;
         foreach ($_attr as $_key => $_data) {
-            eval ('$tmp='.$_data.';');
+            @eval ('$tmp='.$_data.';');//ssnet change
             $compiler->template->properties['function'][$_name]['parameter'][$_key] = $tmp;
         }
         $compiler->smarty->template_functions[$_name]['parameter'] = $compiler->template->properties['function'][$_name]['parameter'];
