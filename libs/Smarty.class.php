@@ -1385,7 +1385,7 @@ class Smarty extends Smarty_Internal_TemplateBase {
      * @param integer $errno Error level
      * @return boolean
      */
-    public static function mutingErrorHandler($errno, $errstr, $errfile, $errline, $errcontext)
+    public static function mutingErrorHandler($errno, $errstr, $errfile, $errline, $errcontext = null)
     {
         $_is_muted_directory = false;
 
